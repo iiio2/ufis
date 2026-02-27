@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { FilterQuery } from "mongoose";
 import { connectDB } from "@/lib/db";
-import FeedbackModel, { type FeedbackDocument } from "@/models/feedback";
+import FeedbackModel from "@/models/feedback";
 import {
   createFeedbackSchema,
   feedbackQuerySchema,
@@ -65,7 +64,7 @@ async function handleList(req: NextApiRequest, res: NextApiResponse) {
   const { search, category, priority, team, page, limit } = parsed.data;
 
   try {
-    const filter: FilterQuery<FeedbackDocument> = {};
+    const filter: Record<string, unknown> = {};
 
     if (search) {
       filter.$text = { $search: search };
